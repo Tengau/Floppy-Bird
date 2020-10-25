@@ -24,9 +24,9 @@ class Player(pygame.sprite.Sprite):
         self.surf.fill((128,255,40))
         self.rect = self.surf.get_rect()
         self.image1 = pygame.image.load("./images/flying.png")
-        self.image1 = pygame.transform.scale(self.image1, (100,100))
+        self.image1 = pygame.transform.scale(self.image1, (100, 100))
         self.image2 = pygame.image.load("./images/not-flying.png")
-        self.image2 = pygame.transform.scale(self.image2, (100,100))
+        self.image2 = pygame.transform.scale(self.image2, (100, 100))
         self.image = self.image1
 
         self.pos = vec(initial_pos)
@@ -56,8 +56,8 @@ class Pipe(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.height = randint(150, 350)
-        self.surf = pygame.Surface((30,self.height))
-        self.surf.fill((randint(10,255),randint(10,255),randint(10,255)))
+        self.surf = pygame.Surface((30, self.height))
+        self.surf.fill((randint(10,255),randint(10, 255), randint(10, 255)))
         self.rect = self.surf.get_rect()
         self.velocity = 2.0
         r = random()
@@ -68,15 +68,15 @@ class Pipe(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load("./images/pipe3.png")
 
-        self.image = pygame.transform.scale(self.image, (self.rect.width*2,self.rect.height))
+        self.image = pygame.transform.scale(self.image, (self.rect.width * 2, self.rect.height))
 
         if random() > 0.5:
             self.top = False
-            self.pos = vec(900,HEIGHT)
+            self.pos = vec(900, HEIGHT)
         else:
             self.top = True
             self.image = pygame.transform.flip(self.image, False, True)
-            self.pos = vec(900,self.height)
+            self.pos = vec(900, self.height)
 
     def move(self):
         self.pos.x -= self.velocity
@@ -87,13 +87,13 @@ class Background(pygame.sprite.Sprite):
         super().__init__()
         self.velocity = 3.0
         self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, (WIDTH*4,HEIGHT))
+        self.image = pygame.transform.scale(self.image, (WIDTH * 4, HEIGHT))
         self.rect = self.image.get_rect()
         self.pos = vec((0,0))
 
     def move(self):
         self.pos.x -= self.velocity
-        if self.pos.x < -WIDTH*3:
+        if self.pos.x < -WIDTH * 3:
             self.pos.x = 0
         self.image.get_rect().midbottom = self.pos
 
@@ -112,13 +112,13 @@ class Text(pygame.sprite.Sprite):
 
     def render(self):
         self.text_surf = self.font.render(self.text, 1, self.color)
-        self.surf.blit(self.text_surf, [self.width,self.height])
-###
+        self.surf.blit(self.text_surf, [self.width, self.height])
+
+
 def updateFile(score):
     f = open('scores.txt', 'r')
     file = f.readlines()
     a = file[0].split(',')
-    print(a)
     last = a[1]
     full = str(name) + ',' + str(score)
     if int(last) < int(score):
@@ -129,11 +129,11 @@ def updateFile(score):
         return score
     return a[0], last
 
-###
-player = Player((WIDTH/2, HEIGHT/2))
+
+player = Player((WIDTH / 2, HEIGHT / 2))
 pipes = []
 
-game_over_text = Text("GAME OVER!", 100, (205,92,92), 72, 250)
+game_over_text = Text("GAME OVER!", 100, (205, 92, 92), 72, 250)
 again = Text("press space to play again", 36, (255, 195, 0), 100, 250)
 
 score_text = Text("", 36, (0, 0, 0), 72, 250)
@@ -154,7 +154,7 @@ pause = False
 use_background1 = False
 score = 0
 last_time = time.time()
-black = (0,0,0)
+black = (0, 0, 0)
 
 name = ""
 myfont = pygame.font.SysFont("Britannic Bold", 100)
@@ -163,11 +163,11 @@ small_font = pygame.font.SysFont("Britannic Bold", 50)
 
 while running is False:
     #display_surface.fill(black)
-    display_surface.blit(pygame.image.load("./images/background2.png"),(0,0))
+    display_surface.blit(pygame.image.load("./images/background2.png"),(0, 0))
 
     game_name = myfont.render("Floppy Bird", 1, (205,92,92))
-    instructions = small_font.render("press space to start!", 1, (255,211,194))
-    name_text = small_font.render("Username: "+ str(name), True, (50,129,232))
+    instructions = small_font.render("press space to start!", 1, (255, 211, 194))
+    name_text = small_font.render("Username: "+ str(name), True, (50, 129, 232))
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.unicode.isalpha():
@@ -179,8 +179,8 @@ while running is False:
         elif event.type == QUIT:
             running = False
             
-    display_surface.blit(name_text,(WIDTH/2-150,HEIGHT/2+20))
-    display_surface.blit(game_name, (175,175))
+    display_surface.blit(name_text,(WIDTH / 2 - 150, HEIGHT / 2 + 20))
+    display_surface.blit(game_name, (175, 175))
     display_surface.blit(instructions, (190, 300))
     pygame.display.update()
 
@@ -189,7 +189,7 @@ while running:
         if event.type == QUIT:
             running = False
 
-    display_surface.fill((100,100,100))
+    display_surface.fill((100, 100, 100))
     time_delta = time.time() - last_time
 
         
@@ -205,7 +205,7 @@ while running:
                 pipe.velocity = 2
             game_over = False
             pipes.clear()
-            player.pos.y = HEIGHT/2
+            player.pos.y = HEIGHT / 2
             score = 0
             background.pos.x = 0
 
@@ -236,21 +236,22 @@ while running:
     else:
         background = background2
 
-    display_surface.blit(background.image, (background.pos.x,background.pos.y))
+    display_surface.blit(background.image, (background.pos.x, background.pos.y))
     for pipe in pipes:
-        display_surface.blit(pipe.image, (pipe.pos.x-pipe.rect.width,pipe.pos.y-pipe.rect.height))
+        display_surface.blit(pipe.image, (pipe.pos.x - pipe.rect.width, pipe.pos.y - pipe.rect.height))
 
-    display_surface.blit(player.image, (player.pos.x-2*player.rect.width,player.pos.y-2*player.rect.height))
-    display_surface.blit(score_text.text_surf, (5,5))
+    display_surface.blit(player.image, (player.pos.x - 2 * player.rect.width, player.pos.y - 2 * player.rect.height))
+    display_surface.blit(score_text.text_surf, (5, 5))
     if game_over:
-        display_surface.blit(pygame.image.load("./images/background3.png"),(0,0))
+        display_surface.blit(pygame.image.load("./images/background3.png"),(0, 0))
+        print(updateFile(score))
         last_name, last = updateFile(score)
-        lastScore = small_font.render("High Score: "+ str(last_name) + " " + str(last), True, (35,154,166))
+        lastScore = small_font.render("High Score: " + str(last_name) + " " + str(last), True, (35, 154, 166))
         
-        display_surface.blit(lastScore, (WIDTH - len(str(last)+str(last_name))*20-210,10))
-        display_surface.blit(game_over_text.text_surf, (WIDTH/2-game_over_text.text_surf.get_rect().width/2,HEIGHT/2-game_over_text.text_surf.get_rect().height/2-50))
-        display_surface.blit(score_text.text_surf, (WIDTH/2-score_text.text_surf.get_rect().width/2,HEIGHT/2-score_text.text_surf.get_rect().height/2+20))
-        display_surface.blit(again.text_surf, (WIDTH/2-again.text_surf.get_rect().width/2,HEIGHT/2-again.text_surf.get_rect().height/2 + 70))
+        display_surface.blit(lastScore, (WIDTH - len(str(last) + str(last_name)) * 20 - 210, 10))
+        display_surface.blit(game_over_text.text_surf, (WIDTH / 2 - game_over_text.text_surf.get_rect().width / 2, HEIGHT / 2 - game_over_text.text_surf.get_rect().height / 2 - 50))
+        display_surface.blit(score_text.text_surf, (WIDTH / 2 - score_text.text_surf.get_rect().width / 2, HEIGHT / 2 - score_text.text_surf.get_rect().height / 2 + 20))
+        display_surface.blit(again.text_surf, (WIDTH / 2 - again.text_surf.get_rect().width / 2, HEIGHT / 2 - again.text_surf.get_rect().height / 2 + 70))
 
     pressed_keys = pygame.key.get_pressed()
     if pressed_keys[K_SPACE]:
